@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import * as BooksAPI from "../../utils/BooksAPI";
-import BookShelf from "./BookShelf";
+import BookShelf from "../BookShelf";
 
 class ListBooks extends Component {
 	render() {
@@ -16,7 +15,9 @@ class ListBooks extends Component {
 							bookTwoTitle="Ender's Game"
 							bookTwoAuthor="Orson Scott Card"
 							bookTwoUrl="http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api"
-						/>
+						>
+							Currently Reading
+						</BookShelf>
 						<BookShelf
 							title="Want to Read"
 							bookOneTitle="1776"
@@ -25,7 +26,9 @@ class ListBooks extends Component {
 							bookTwoTitle="Harry Potter and the Sorcerer's Stone"
 							bookTwoAuthor="J.K. Rowling"
 							bookTwoUrl="http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api"
-						/>
+						>
+							Want to Read
+						</BookShelf>
 						<BookShelf
 							title="Read"
 							bookOneTitle="The Hobbit"
@@ -34,7 +37,9 @@ class ListBooks extends Component {
 							bookTwoTitle="Oh, the Places You'll Go!"
 							bookTwoAuthor="Seuss"
 							bookTwoUrl="http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api"
-						/>
+						>
+							Read
+						</BookShelf>
 					</div>
 				</div>
 			</div>

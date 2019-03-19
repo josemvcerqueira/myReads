@@ -1,17 +1,17 @@
 import React from "react";
 
 const BookShelf = ({
-	title,
 	bookOneTitle,
 	bookOneAuthor,
 	bookOneUrl,
 	bookTwoTitle,
 	bookTwoAuthor,
-	bookTwoUrl
+	bookTwoUrl,
+	children
 }) => {
 	return (
 		<div className="bookshelf">
-			<h2 className="bookshelf-title">{title}</h2>
+			<h2 className="bookshelf-title">{children}</h2>
 			<div className="bookshelf-books">
 				<ol className="books-grid">
 					<li>
