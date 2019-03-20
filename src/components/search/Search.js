@@ -53,7 +53,7 @@ class Search extends Component {
 						/>
 					</div>
 				</div>
-				<SearchResults books={state.booksArr} />
+				<SearchResults state={this.state} />
 			</div>
 		);
 	}
