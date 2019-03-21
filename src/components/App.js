@@ -3,6 +3,7 @@ import "./App.css";
 import Search from "./search/Search";
 import ListBooks from "./listbooks/ListBooks";
 import SearchBtn from "./search/SearchBtn";
+import * as BooksAPI from "../utils/BooksAPI";
 
 const Title = ({ title }) => {
   return (
@@ -17,8 +18,7 @@ class BooksApp extends Component {
     home: {
       currentlyReading: [],
       wantToRead: [],
-      read: [],
-      none: []
+      read: []
     },
     showSearchPage: false
     /**
@@ -37,28 +37,39 @@ class BooksApp extends Component {
     this.setState({ showSearchPage: true });
   };
 
-  addBook = (shelf, book) => {
-    const arr = [];
-    arr.push(book);
-    this.setState(prevState => ({
-      ...prevState,
-      home: {
-        ...prevState.home,
-        [shelf]: prevState.home[shelf].concat(arr)
-      }
-    }));
+  addBooktoState = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(response => {
+      this.setState(prevState => ({
+        ...prevState,
+        home: response
+      }));
+    });
   };
 
+  componentDidMount() {
+    BooksAPI.getAll().then(response => {
+      console.log(response);
+    });
+  }
+
   render() {
-    const { handleSearchBtnClick, handleSearchCloseBtn, state, addBook } = this;
+    const {
+      handleSearchBtnClick,
+      handleSearchCloseBtn,
+      state,
+      addBooktoState
+    } = this;
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <Search updateCR={addBook} handleClick={handleSearchCloseBtn} />
+          <Search
+            updateShelf={addBooktoState}
+            handleClick={handleSearchCloseBtn}
+          />
         ) : (
           <div>
             <Title title="My Reads" />
-            <ListBooks updateCR={addBook} state={state.home} />
+            <ListBooks updateShelf={addBooktoState} state={state.home} />
             <SearchBtn handleClick={handleSearchBtnClick} />
           </div>
         )}

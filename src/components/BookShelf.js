@@ -5,7 +5,7 @@ class BookShelf extends Component {
 
 	handleSelectChange = event => {
 		this.setState({ value: event.target.value });
-		this.props.updateCR(event.target.value, this.props.book);
+		this.props.updateShelf(this.props.book, event.target.value);
 	};
 
 	render() {
