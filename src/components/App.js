@@ -4,16 +4,6 @@ import Search from "./search/Search";
 import ListBooks from "./listbooks/ListBooks";
 import SearchBtn from "./search/SearchBtn";
 
-const book = {
-  imageLinks: {
-    thumbnail:
-      "http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api"
-  },
-  title: "To Kill a Mockingbird",
-  authors: ["Harper Lee"],
-  industryIdentifiers: [{ identifier: "00007" }]
-};
-
 const Title = ({ title }) => {
   return (
     <div className="list-books-title">
@@ -25,9 +15,10 @@ const Title = ({ title }) => {
 class BooksApp extends Component {
   state = {
     home: {
-      currentlyReading: [book, book, book],
-      wantToRead: [book],
-      read: [book]
+      currentlyReading: [],
+      wantToRead: [],
+      read: [],
+      none: []
     },
     showSearchPage: false
     /**
@@ -46,16 +37,28 @@ class BooksApp extends Component {
     this.setState({ showSearchPage: true });
   };
 
+  addBook = (shelf, book) => {
+    const arr = [];
+    arr.push(book);
+    this.setState(prevState => ({
+      ...prevState,
+      home: {
+        ...prevState.home,
+        [shelf]: prevState.home[shelf].concat(arr)
+      }
+    }));
+  };
+
   render() {
-    const { handleSearchBtnClick, handleSearchCloseBtn, state } = this;
+    const { handleSearchBtnClick, handleSearchCloseBtn, state, addBook } = this;
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <Search handleClick={handleSearchCloseBtn} />
+          <Search updateCR={addBook} handleClick={handleSearchCloseBtn} />
         ) : (
           <div>
             <Title title="My Reads" />
-            <ListBooks state={state.home} />
+            <ListBooks updateCR={addBook} state={state.home} />
             <SearchBtn handleClick={handleSearchBtnClick} />
           </div>
         )}

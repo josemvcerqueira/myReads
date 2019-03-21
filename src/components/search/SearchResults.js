@@ -1,7 +1,7 @@
 import React from "react";
 import BookShelf from "../BookShelf";
 
-const SearchResults = ({ state }) => {
+const SearchResults = ({ state, updateCR }) => {
 	let view;
 	if (!state.query) {
 		view = null;
@@ -13,7 +13,8 @@ const SearchResults = ({ state }) => {
 					<ol className="books-grid">
 						{state.booksArr.map(book => (
 							<BookShelf
-								key={book.industryIdentifiers[0].identifier}
+								updateCR={updateCR}
+								key={book.id}
 								book={book}
 							/>
 						))}
