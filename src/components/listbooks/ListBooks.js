@@ -10,25 +10,37 @@ class ListBooks extends Component {
 	};
 
 	componentDidMount() {
-		this.handleIds();
+		BooksAPI.getAll()
+			.then(booksArr =>
+				booksArr.reduce((acc, book) => {
+					const {
+						currentlyReading = [],
+						wantToRead = [],
+						read = []
+					} = acc;
+					let arr = [book];
+					if (book.shelf === "currentlyReading") {
+						return {
+							...acc,
+							currentlyReading: currentlyReading.concat(arr)
+						};
+					} else if (book.shelf === "wantToRead") {
+						return { ...acc, wantToRead: wantToRead.concat(arr) };
+					} else if (book.shelf === "read") {
+						return { ...acc, read: read.concat(arr) };
+					}
+				}, {})
+			)
+			.then(newState => {
+				this.setState(prevState => ({
+					...newState
+				}));
+			})
+			.catch(error => {
+				console.log(error);
+			});
 	}
 
-	handleIds = () => {
-		const stateKeys = Object.keys(this.state);
-		stateKeys.map(key =>
-			this.props.state[key].map(id =>
-				BooksAPI.get(id).then(book => {
-					const arr = [];
-					arr.push(book);
-					this.setState(prevState => ({
-						...prevState,
-						[key]: prevState[key].concat(arr)
-					}));
-				})
-			)
-		);
-		console.log("how many times is this running");
-	};
 	render() {
 		return (
 			<div className="list-books">

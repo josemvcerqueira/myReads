@@ -1,11 +1,16 @@
 import React, { Component } from "react";
+import * as BooksAPI from "../utils/BooksAPI";
 
 class BookShelf extends Component {
-	state = { value: "none" };
+	state = { value: this.props.book.shelf };
 
 	handleSelectChange = event => {
 		this.setState({ value: event.target.value });
-		this.props.updateShelf(this.props.book, event.target.value);
+		this.updateShelf(this.props.book, event.target.value);
+	};
+
+	updateShelf = (book, shelf) => {
+		BooksAPI.update(book, shelf);
 	};
 
 	render() {

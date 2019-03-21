@@ -3,7 +3,6 @@ import "./App.css";
 import Search from "./search/Search";
 import ListBooks from "./listbooks/ListBooks";
 import SearchBtn from "./search/SearchBtn";
-import * as BooksAPI from "../utils/BooksAPI";
 
 const Title = ({ title }) => {
   return (
@@ -15,11 +14,6 @@ const Title = ({ title }) => {
 
 class BooksApp extends Component {
   state = {
-    home: {
-      currentlyReading: [],
-      wantToRead: [],
-      read: []
-    },
     showSearchPage: false
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -37,39 +31,16 @@ class BooksApp extends Component {
     this.setState({ showSearchPage: true });
   };
 
-  addBooktoState = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(response => {
-      this.setState(prevState => ({
-        ...prevState,
-        home: response
-      }));
-    });
-  };
-
-  componentDidMount() {
-    BooksAPI.getAll().then(response => {
-      console.log(response);
-    });
-  }
-
   render() {
-    const {
-      handleSearchBtnClick,
-      handleSearchCloseBtn,
-      state,
-      addBooktoState
-    } = this;
+    const { handleSearchBtnClick, handleSearchCloseBtn, state } = this;
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <Search
-            updateShelf={addBooktoState}
-            handleClick={handleSearchCloseBtn}
-          />
+        {state.showSearchPage ? (
+          <Search handleClick={handleSearchCloseBtn} />
         ) : (
           <div>
             <Title title="My Reads" />
-            <ListBooks updateShelf={addBooktoState} state={state.home} />
+            <ListBooks />
             <SearchBtn handleClick={handleSearchBtnClick} />
           </div>
         )}

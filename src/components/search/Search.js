@@ -23,7 +23,7 @@ class Search extends Component {
 	};
 
 	render() {
-		const { handleClick, updateShelf } = this.props;
+		const { handleClick } = this.props;
 		const { state, handleInputChange } = this;
 		return (
 			<div className="search-books">
@@ -45,7 +45,7 @@ class Search extends Component {
 						/>
 					</div>
 				</div>
-				<SearchResults updateShelf={updateShelf} state={this.state} />
+				<SearchResults state={this.state} />
 			</div>
 		);
 	}
