@@ -6,7 +6,7 @@ class Search extends Component {
 	state = { query: "", booksArr: false };
 
 	handleInputChange = value => {
-		const userInput = value.trim();
+		const userInput = value;
 		this.setState(prevState => ({
 			query: userInput
 		}));

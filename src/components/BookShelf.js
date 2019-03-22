@@ -2,15 +2,35 @@ import React, { Component } from "react";
 import * as BooksAPI from "../utils/BooksAPI";
 
 class BookShelf extends Component {
-	state = { value: this.props.book.shelf };
+	_isMounted = false;
+	state = { value: "" };
 
 	handleSelectChange = event => {
-		this.setState({ value: event.target.value });
+		if (this.props.updateListBooks && this._isMounted)
+			this.props.updateListBooks();
 		this.updateShelf(this.props.book, event.target.value);
+		if (this._isMounted) this.getBookShelf();
 	};
 
 	updateShelf = (book, shelf) => {
 		BooksAPI.update(book, shelf);
+	};
+
+	componentDidMount() {
+		this._isMounted = true;
+		this.getBookShelf();
+	}
+
+	componentWillUnmount() {
+		this._isMounted = false;
+	}
+
+	getBookShelf = () => {
+		BooksAPI.get(this.props.book.id).then(book =>
+			this.setState(prevState => ({
+				value: book.shelf
+			}))
+		);
 	};
 
 	render() {
