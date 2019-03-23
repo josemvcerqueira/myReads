@@ -1,5 +1,6 @@
 import React from "react";
 import BookShelf from "../BookShelf";
+import PropTypes from "prop-types";
 
 const SearchResults = ({ state }) => {
 	let view;
@@ -28,6 +29,10 @@ const SearchResults = ({ state }) => {
 		);
 	}
 	return <div className="search-books-results">{view}</div>;
+};
+
+SearchResults.propTypes = {
+	state: PropTypes.object.isRequired
 };
 
 export default SearchResults;

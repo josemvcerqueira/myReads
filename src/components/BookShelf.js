@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import * as BooksAPI from "../utils/BooksAPI";
+import PropTypes from "prop-types";
 
 class BookShelf extends Component {
-	_isMounted = false;
 	state = { value: "" };
 
-	handleSelectChange = event => {
-		if (this.props.updateListBooks && this._isMounted)
-			this.props.updateListBooks();
-		this.updateShelf(this.props.book, event.target.value);
-		if (this._isMounted) this.getBookShelf();
-	};
+	_isMounted = false;
 
-	updateShelf = (book, shelf) => {
-		BooksAPI.update(book, shelf);
+	handleSelectChange = event => {
+		if (this._isMounted) {
+			BooksAPI.update(this.props.book, event.target.value);
+			this.getBookShelf();
+			if (this.props.updateListBooks) {
+				this.props.updateListBooks();
+			}
+		}
 	};
 
 	componentDidMount() {
@@ -95,5 +96,10 @@ class BookShelf extends Component {
 		return <div />;
 	}
 }
+
+BookShelf.propTypes = {
+	book: PropTypes.object.isRequired,
+	updateListBooks: PropTypes.func
+};
 
 export default BookShelf;

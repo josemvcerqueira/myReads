@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import BookShelf from "../BookShelf";
 import * as BooksAPI from "../../utils/BooksAPI";
 
-class ListBooks extends Component {
+class ListOfBooks extends Component {
 	_isMounted = false;
 	state = {
 		currentlyReading: [],
@@ -20,43 +20,44 @@ class ListBooks extends Component {
 	}
 
 	updateListBooks = () => {
-		BooksAPI.getAll()
-			.then(booksArr =>
-				booksArr.reduce((acc, book) => {
-					const {
-						currentlyReading = [],
-						wantToRead = [],
-						read = []
-					} = acc;
-					let arr = [book];
-					if (book.shelf === "currentlyReading") {
-						return {
-							...acc,
-							currentlyReading: currentlyReading.concat(arr)
-						};
-					} else if (book.shelf === "wantToRead") {
-						return {
-							...acc,
-							wantToRead: wantToRead.concat(arr)
-						};
-					} else if (book.shelf === "read") {
-						return { ...acc, read: read.concat(arr) };
-					} else {
-						return acc;
+		if (this._isMounted) {
+			BooksAPI.getAll()
+				.then(booksArr =>
+					booksArr.reduce((acc, book) => {
+						const {
+							currentlyReading = [],
+							wantToRead = [],
+							read = []
+						} = acc;
+						let arr = [book];
+						if (book.shelf === "currentlyReading") {
+							return {
+								...acc,
+								currentlyReading: currentlyReading.concat(arr)
+							};
+						} else if (book.shelf === "wantToRead") {
+							return {
+								...acc,
+								wantToRead: wantToRead.concat(arr)
+							};
+						} else if (book.shelf === "read") {
+							return { ...acc, read: read.concat(arr) };
+						} else {
+							return acc;
+						}
+					}, {})
+				)
+				.then(newState => {
+					if (this._isMounted) {
+						this.setState(prevState => ({
+							...newState
+						}));
 					}
-				}, {})
-			)
-			.then(newState => {
-				const state = newState;
-				if (this._isMounted) {
-					this.setState(prevState => ({
-						...state
-					}));
-				}
-			})
-			.catch(error => {
-				console.log(error);
-			});
+				})
+				.catch(error => {
+					console.log(error);
+				});
+		}
 	};
 
 	render() {
@@ -101,4 +102,4 @@ class ListBooks extends Component {
 	}
 }
 
-export default ListBooks;
+export default ListOfBooks;

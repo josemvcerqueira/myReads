@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import SearchResults from "./SearchResults";
 import * as BooksAPI from "../../utils/BooksAPI";
 
@@ -23,17 +24,13 @@ class Search extends Component {
 	};
 
 	render() {
-		const { handleClick } = this.props;
 		const { state, handleInputChange } = this;
 		return (
 			<div className="search-books">
 				<div className="search-books-bar">
-					<button
-						className="close-search"
-						onClick={() => handleClick()}
-					>
-						Close
-					</button>
+					<Link to="/">
+						<button className="close-search">Close</button>
+					</Link>
 					<div className="search-books-input-wrapper">
 						<input
 							type="text"
