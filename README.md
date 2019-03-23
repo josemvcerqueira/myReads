@@ -1,6 +1,6 @@
 # MyReads Project
 
-This is a web application that allows the user to search for books and organize them on three different categories:
+This is a web application that allows the user to search for books and organize them in three different categories:
 
 -   Currently Reading
 -   Want to Read

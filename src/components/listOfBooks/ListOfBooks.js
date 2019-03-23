@@ -3,12 +3,13 @@ import BookShelf from "../BookShelf";
 import * as BooksAPI from "../../utils/BooksAPI";
 
 class ListOfBooks extends Component {
-	_isMounted = false;
 	state = {
 		currentlyReading: [],
 		wantToRead: [],
 		read: []
 	};
+
+	_isMounted = false;
 
 	componentDidMount() {
 		this._isMounted = true;
