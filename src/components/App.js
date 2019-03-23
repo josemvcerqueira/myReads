@@ -13,7 +13,7 @@ const Title = ({ title }) => {
   );
 };
 
-const BooksApp = () => {
+const App = () => {
   return (
     <div className="app">
       <Route
@@ -32,4 +32,4 @@ const BooksApp = () => {
   );
 };
 
-export default BooksApp;
+export default App;
