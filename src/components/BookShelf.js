@@ -36,6 +36,7 @@ class BookShelf extends Component {
 
 	render() {
 		const { book } = this.props;
+		const { state, handleSelectChange } = this;
 		if (book.authors !== undefined) {
 			return (
 				<div>
@@ -54,8 +55,8 @@ class BookShelf extends Component {
 								/>
 								<div className="book-shelf-changer">
 									<select
-										value={this.state.value}
-										onChange={this.handleSelectChange}
+										value={state.value}
+										onChange={handleSelectChange}
 									>
 										<option value="move" disabled>
 											Move to...

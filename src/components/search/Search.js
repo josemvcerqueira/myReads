@@ -7,12 +7,11 @@ class Search extends Component {
 	state = { query: "", booksArr: false };
 
 	handleInputChange = value => {
-		const userInput = value;
 		this.setState(prevState => ({
-			query: userInput
+			query: value
 		}));
 
-		BooksAPI.search(userInput)
+		BooksAPI.search(value)
 			.then(booksArr => {
 				this.setState(prevState => ({
 					booksArr: booksArr
@@ -42,7 +41,7 @@ class Search extends Component {
 						/>
 					</div>
 				</div>
-				<SearchResults state={this.state} />
+				<SearchResults state={state} />
 			</div>
 		);
 	}

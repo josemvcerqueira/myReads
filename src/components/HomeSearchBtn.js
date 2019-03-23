@@ -5,7 +5,7 @@ const HomeSearchBtn = () => {
 	return (
 		<div className="open-search">
 			<Link to="/search">
-				<button>Add a book</button>
+				<button />
 			</Link>
 		</div>
 	);

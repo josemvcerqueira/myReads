@@ -1,8 +1,8 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import "./App.css";
-import Search from "./search/Search";
 import ListOfBooks from "./listOfBooks/ListOfBooks";
+import Search from "./search/Search";
 import HomeSearchBtn from "./HomeSearchBtn";
 
 const Title = ({ title }) => {
