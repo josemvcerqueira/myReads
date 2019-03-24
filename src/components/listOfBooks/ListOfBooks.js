@@ -4,99 +4,94 @@ import * as BooksAPI from "../../utils/BooksAPI";
 
 class ListOfBooks extends Component {
 	state = {
-		currentlyReading: [],
-		wantToRead: [],
-		read: []
+		books: []
 	};
 
 	_isMounted = false;
 
 	componentDidMount() {
 		this._isMounted = true;
-		this.updateListBooks();
+		this.renderBooks();
 	}
 
 	componentWillUnmount() {
 		this._isMounted = false;
 	}
 
-	moveBook = (book, shelf) => {};
+	updateShelf = (book, shelf) => {
+		let _state = this.state.books;
+		_state = _state.map(item => {
+			if (item === book) {
+				item.shelf = shelf;
+			}
+			return item;
+		});
 
-	updateListBooks = () => {
+		this.setState({
+			books: _state
+		});
+	};
+
+	renderBooks = () => {
 		if (this._isMounted) {
 			BooksAPI.getAll()
 				.then(booksArr =>
-					booksArr.reduce((acc, book) => {
-						const {
-							currentlyReading = [],
-							wantToRead = [],
-							read = []
-						} = acc;
-						let arr = [book];
-						if (book.shelf === "currentlyReading") {
-							return {
-								...acc,
-								currentlyReading: currentlyReading.concat(arr)
-							};
-						} else if (book.shelf === "wantToRead") {
-							return {
-								...acc,
-								wantToRead: wantToRead.concat(arr)
-							};
-						} else if (book.shelf === "read") {
-							return { ...acc, read: read.concat(arr) };
-						} else {
-							return acc;
-						}
-					}, {})
+					this.setState({
+						books: booksArr
+					})
 				)
-				.then(newState => {
-					if (this._isMounted) {
-						this.setState(prevState => ({
-							...newState
-						}));
-					}
-				})
 				.catch(error => {
-					console.log(error);
+					this.setState({
+						books: []
+					});
 				});
 		}
 	};
 
 	render() {
+		const { state, updateShelf } = this;
+
 		return (
 			<div className="list-books">
 				<div className="list-books-content">
 					<div className="bookshelf">
 						<h2 className="bookshelf-title">Currently Reading</h2>
 						<ol className="books-grid">
-							{this.state.currentlyReading.map(book => (
-								<BookShelf
-									updateListBooks={this.updateListBooks}
-									key={book.id}
-									book={book}
-								/>
-							))}
+							{state.books
+								.filter(
+									book => book.shelf === "currentlyReading"
+								)
+								.map(book => (
+									<BookShelf
+										updateShelf={updateShelf}
+										key={book.id}
+										book={book}
+									/>
+								))}
 						</ol>
 						<h2 className="bookshelf-title">Want to Read</h2>
 						<ol className="books-grid">
-							{this.state.wantToRead.map(book => (
-								<BookShelf
-									updateListBooks={this.updateListBooks}
-									key={book.id}
-									book={book}
-								/>
-							))}
+							{state.books
+								.filter(book => book.shelf === "wantToRead")
+								.map(book => (
+									<BookShelf
+										updateShelf={updateShelf}
+										key={book.id}
+										book={book}
+									/>
+								))}
 						</ol>
 						<h2 className="bookshelf-title">Read</h2>
 						<ol className="books-grid">
-							{this.state.read.map(book => (
-								<BookShelf
-									updateListBooks={this.updateListBooks}
-									key={book.id}
-									book={book}
-								/>
-							))}
+							{state.books
+								.filter(book => book.shelf === "read")
+								.map(book => (
+									<BookShelf
+										updateShelf={updateShelf}
+										key={book.id}
+										book={book}
+									/>
+								))}
 						</ol>
 					</div>
 				</div>

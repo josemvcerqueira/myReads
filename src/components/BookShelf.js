@@ -5,33 +5,36 @@ import PropTypes from "prop-types";
 class BookShelf extends Component {
 	state = { value: "" };
 
-	_isMounted = false;
+	componentDidMount() {
+		if (this.props.updateShelf) {
+			this.getBookShelf();
+		} else {
+			this.handleSearchShelfValue();
+		}
+	}
 
 	handleSelectChange = event => {
-		if (this._isMounted) {
-			BooksAPI.update(this.props.book, event.target.value);
+		BooksAPI.update(this.props.book, event.target.value);
+		if (this.props.updateShelf) {
+			this.props.updateShelf(this.props.book, event.target.value);
 			this.getBookShelf();
-			if (this.props.updateListBooks) {
-				this.props.updateListBooks();
-			}
+		} else if (!this.props.updateShelf) {
+			this.handleSearchShelfValue();
 		}
 	};
 
-	componentDidMount() {
-		this._isMounted = true;
-		this.getBookShelf();
-	}
-
-	componentWillUnmount() {
-		this._isMounted = false;
-	}
-
-	getBookShelf = () => {
+	handleSearchShelfValue = () => {
 		BooksAPI.get(this.props.book.id).then(book =>
 			this.setState(prevState => ({
 				value: book.shelf
 			}))
 		);
+	};
+
+	getBookShelf = () => {
+		this.setState({
+			value: this.props.book.shelf
+		});
 	};
 
 	render() {
@@ -41,7 +44,6 @@ class BookShelf extends Component {
 		if (book.imageLinks) {
 			cover = book.imageLinks.thumbnail;
 		}
-		console.log(cover);
 		return (
 			<div>
 				<li>
@@ -104,7 +106,7 @@ class BookShelf extends Component {
 
 BookShelf.propTypes = {
 	book: PropTypes.object.isRequired,
-	updateListBooks: PropTypes.func
+	updateShelf: PropTypes.func
 };
 
 export default BookShelf;
