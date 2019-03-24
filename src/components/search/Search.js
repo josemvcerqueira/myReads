@@ -10,7 +10,7 @@ class Search extends Component {
 		this.inputChangeDebounced = debounce(this.inputChange, 50);
 	}
 
-	state = { query: "", booksArr: false };
+	state = { query: "", booksArr: [] };
 
 	handleInputChange = value => {
 		this.inputChangeDebounced(value);
@@ -28,7 +28,7 @@ class Search extends Component {
 				this.setState({ booksArr });
 			})
 			.catch(error => {
-				this.setState({ booksArr: false });
+				this.setState({ booksArr: [] });
 			});
 	};
 
