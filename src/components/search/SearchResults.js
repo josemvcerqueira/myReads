@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 const SearchResults = ({ state }) => {
 	let view;
-	console.log(state.booksArr);
 	if (!state.query) {
 		view = null;
 	} else if (state.booksArr && !state.booksArr.error) {
