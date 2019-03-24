@@ -20,6 +20,8 @@ class ListOfBooks extends Component {
 		this._isMounted = false;
 	}
 
+	moveBook = (book, shelf) => {};
+
 	updateListBooks = () => {
 		if (this._isMounted) {
 			BooksAPI.getAll()

@@ -1,24 +1,34 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import debounce from "lodash.debounce";
 import SearchResults from "./SearchResults";
 import * as BooksAPI from "../../utils/BooksAPI";
 
 class Search extends Component {
+	constructor() {
+		super();
+		this.inputChangeDebounced = debounce(this.inputChange, 50);
+	}
+
 	state = { query: "", booksArr: false };
 
 	handleInputChange = value => {
-		this.setState(prevState => ({
-			query: value
-		}));
+		this.inputChangeDebounced(value);
+	};
+
+	componentWillUnmount() {
+		this.inputChangeDebounced.cancel();
+	}
+
+	inputChange = value => {
+		this.setState({ query: value });
 
 		BooksAPI.search(value)
 			.then(booksArr => {
-				this.setState(prevState => ({
-					booksArr: booksArr
-				}));
+				this.setState({ booksArr });
 			})
 			.catch(error => {
-				console.log(error);
+				this.setState({ booksArr: false });
 			});
 	};
 

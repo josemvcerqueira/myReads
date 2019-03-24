@@ -6,7 +6,7 @@ const SearchResults = ({ state }) => {
 	let view;
 	if (!state.query) {
 		view = null;
-	} else if (state.booksArr && !state.booksArr.error) {
+	} else if (state.booksArr) {
 		view = (
 			<div className="bookshelf">
 				<div className="bookshelf-books">

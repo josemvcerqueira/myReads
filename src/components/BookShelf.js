@@ -37,64 +37,68 @@ class BookShelf extends Component {
 	render() {
 		const { book } = this.props;
 		const { state, handleSelectChange } = this;
-		if (book.authors !== undefined) {
-			return (
-				<div>
-					<li>
-						<div className="book">
-							<div className="book-top">
-								<div
-									className="book-cover"
-									style={{
-										width: 128,
-										height: 193,
-										backgroundImage: `url(${
-											book.imageLinks.thumbnail
-										})`
-									}}
-								/>
-								<div className="book-shelf-changer">
-									<select
-										value={state.value}
-										onChange={handleSelectChange}
+		let cover;
+		if (book.imageLinks) {
+			cover = book.imageLinks.thumbnail;
+		}
+		console.log(cover);
+		return (
+			<div>
+				<li>
+					<div className="book">
+						<div className="book-top">
+							<div
+								className="book-cover"
+								style={{
+									width: 128,
+									height: 193,
+									backgroundImage: `url(${cover})`
+								}}
+							/>
+							<div className="book-shelf-changer">
+								<select
+									value={state.value}
+									onChange={handleSelectChange}
+								>
+									<option value="move" disabled>
+										Move to...
+									</option>
+									<option
+										label="Currently Reading"
+										value="currentlyReading"
 									>
-										<option value="move" disabled>
-											Move to...
-										</option>
-										<option
-											label="currentlyReading"
-											value="currentlyReading"
-										>
-											Currently Reading
-										</option>
-										<option
-											label="wantToRead"
-											value="wantToRead"
-										>
-											Want to Read
-										</option>
-										<option label="read" value="read">
-											Read
-										</option>
-										<option label="none" value="none">
-											None
-										</option>
-									</select>
-								</div>
+										Currently Reading
+									</option>
+									<option
+										label="Want to Read"
+										value="wantToRead"
+									>
+										Want to Read
+									</option>
+									<option label="Read" value="read">
+										Read
+									</option>
+									<option label="none" value="none">
+										None
+									</option>
+								</select>
 							</div>
+						</div>
+						{book.title && (
 							<div className="book-title">{book.title}</div>
+						)}
+						{book.authors && (
 							<div className="book-authors">
 								{book.authors.reduce(
 									(acc, curr) => curr.concat(" ", acc),
 									""
 								)}
 							</div>
-						</div>
-					</li>
-				</div>
-			);
-		}
-		return <div />;
+						)}
+					</div>
+				</li>
+			</div>
+		);
 	}
 }
 
